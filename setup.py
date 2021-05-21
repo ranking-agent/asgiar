@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='asgiar',
-    version='0.1.0',
+    version='0.2.0',
     author='Patrick Wang',
     author_email='patrick@covar.com',
     url='https://github.com/patrickkwang/asgiar',
@@ -11,7 +11,7 @@ setup(
     packages=['asgiar'],
     include_package_data=True,
     install_requires=[
-        "httpx>=0.16,<0.18"
+        "httpx>=0.18"
     ],
     zip_safe=False,
     license='MIT',
