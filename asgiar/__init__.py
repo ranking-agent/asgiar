@@ -35,9 +35,9 @@ class ASGIAR(AsyncContextDecorator):
 
         for transport in self._targets:
             patch = mock.patch(
-                f"{transport}.arequest",
+                f"{transport}.handle_async_request",
                 spec=True,
-                new_callable=self._arequest,
+                new_callable=self._handle_async_request,
             )
             patch.start()
             self._patches.append(patch)
@@ -58,12 +58,12 @@ class ASGIAR(AsyncContextDecorator):
         """Stop patching."""
         self.__exit__(*args)
 
-    def _arequest(self, spec):
+    def _handle_async_request(self, spec):
         async def request(_self, *args, **kwargs):
             pass_through = partial(spec, _self)
             host = args[1][1].decode()
             if self._host is None or host == self._host:
-                return await self._transport.arequest(
+                return await self._transport.handle_async_request(
                     *args,
                     **kwargs,
                 )
