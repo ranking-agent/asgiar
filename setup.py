@@ -10,6 +10,9 @@ setup(
     description='ASGIAR',
     packages=['asgiar'],
     include_package_data=True,
+    install_requires=[
+        "httpx>=0.16,<0.18"
+    ],
     zip_safe=False,
     license='MIT',
     python_requires='>=3.6',
