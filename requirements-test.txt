@@ -1,4 +1,4 @@
-fastapi==0.61.1
-pytest==6.1.1
-pytest-asyncio==0.14.0
+fastapi==0.65.1
+pytest==6.2.4
+pytest-asyncio==0.15.1
 pytest-cov==2.12.0
