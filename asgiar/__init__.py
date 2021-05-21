@@ -61,7 +61,7 @@ class ASGIAR(AsyncContextDecorator):
     def _handle_async_request(self, spec):
         async def request(_self, *args, **kwargs):
             pass_through = partial(spec, _self)
-            host = args[1][1].decode()
+            host = next(header[1].decode() for header in kwargs["headers"] if header[0] == b"Host")
             if self._host is None or host == self._host:
                 return await self._transport.handle_async_request(
                     *args,
