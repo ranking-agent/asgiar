@@ -26,7 +26,7 @@ async def test_decorator():
     """
     async with httpx.AsyncClient() as client:
         response = await client.get(f"http://{HOST}/foo")
-    assert response.json() == "bar"
+        assert response.json() == "bar"
 
 
 @pytest.mark.asyncio
@@ -38,8 +38,8 @@ async def test_context():
     with ASGIAR(APP, host=HOST):
         async with httpx.AsyncClient() as client:
             response = await client.get(f"http://{HOST}/foo")
-        assert response.status_code == 200
-        assert response.json() == "bar"
+            assert response.status_code == 200
+            assert response.json() == "bar"
 
 
 @pytest.mark.asyncio
@@ -65,13 +65,12 @@ async def test_multiple():
         with ASGIAR(app2, host="ghi.jkl"):
             async with httpx.AsyncClient() as client:
                 response = await client.get("http://abc.def/foo")
-            assert response.status_code == 200
-            assert response.json() == "app1"
+                assert response.status_code == 200
+                assert response.json() == "app1"
 
-            async with httpx.AsyncClient() as client:
                 response = await client.get("http://ghi.jkl/foo")
-            assert response.status_code == 200
-            assert response.json() == "app2"
+                assert response.status_code == 200
+                assert response.json() == "app2"
 
 
 @pytest.mark.asyncio
@@ -83,7 +82,7 @@ async def test_passthrough():
     with ASGIAR(APP, host="test"):
         async with httpx.AsyncClient() as client:
             response = await client.get(f"http://{HOST}")
-        assert response.status_code == 200
+            assert response.status_code == 200
 
 
 def test_sync():
@@ -92,5 +91,7 @@ def test_sync():
     The async overlay does nothing to sync calls.
     """
     with ASGIAR(APP, host=HOST):
+        response = httpx.get(f"http://{HOST}")
+        assert response.status_code == 200
         response = httpx.get(f"http://{HOST}/hello")
         assert response.status_code == 404
