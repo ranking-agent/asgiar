@@ -95,3 +95,21 @@ def test_sync():
         assert response.status_code == 200
         response = httpx.get(f"http://{HOST}/hello")
         assert response.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_url():
+    """Test full url pattern.
+
+    Calls to only the mocked paths should be intercepted.
+    """
+    with ASGIAR(APP, url=f"http://{HOST}/f*"):
+        async with httpx.AsyncClient() as client:
+            # this path is mocked
+            response = await client.get(f"http://{HOST}/foo")
+            assert response.status_code == 200
+            assert response.json() == "bar"
+
+            # this one is not
+            response = await client.get(f"http://{HOST}/hello")
+            assert response.status_code == 404
