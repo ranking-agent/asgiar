@@ -1,4 +1,5 @@
 """Test mocking."""
+import asyncio
 from fastapi import FastAPI
 import httpx
 import pytest
@@ -14,7 +15,26 @@ async def foo() -> str:
     return "bar"
 
 
+@APP.get("/slow", response_model=str)
+async def slow() -> str:
+    """Handle /slow."""
+    await asyncio.sleep(1.0)
+    return "bar"
+
+
 HOST = "example.org"
+
+
+@pytest.mark.asyncio
+@ASGIAR(APP, host=HOST)
+async def test_timeout():
+    """Test timeout."""
+    with pytest.raises(asyncio.exceptions.TimeoutError):
+        async with httpx.AsyncClient() as client:
+            await client.get(
+                f"http://{HOST}/slow",
+                timeout=0.1,
+            )
 
 
 @pytest.mark.asyncio
