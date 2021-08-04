@@ -29,7 +29,7 @@ HOST = "example.org"
 @ASGIAR(APP, host=HOST)
 async def test_timeout():
     """Test timeout."""
-    with pytest.raises(asyncio.exceptions.TimeoutError):
+    with pytest.raises(asyncio.TimeoutError):
         async with httpx.AsyncClient() as client:
             await client.get(
                 f"http://{HOST}/slow",
