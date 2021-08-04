@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='asgiar',
-    version='0.2.0',
+    version='0.2.1',
     author='Patrick Wang',
     author_email='patrick@covar.com',
     url='https://github.com/patrickkwang/asgiar',
