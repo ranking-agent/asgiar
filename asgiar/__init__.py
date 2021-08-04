@@ -1,4 +1,5 @@
 """ASGI AR."""
+import asyncio
 from fnmatch import fnmatch
 from functools import partial, wraps
 from typing import Any, List
@@ -78,10 +79,11 @@ class ASGIAR(AsyncContextDecorator):
             prefix = scheme.decode() + "://" + host.decode() + (":" + port.decode() if port is not None else "")
             path = path.decode()
             if prefix == self._url_prefix and fnmatch(path, self._url_path):
-                return await self._transport.handle_async_request(
+                timeout = kwargs.get("extensions", {}).get("timeout", {"read": None})["read"]
+                return await asyncio.wait_for(self._transport.handle_async_request(
                     *args,
                     **kwargs,
-                )
+                ), timeout=timeout)
             return await pass_through(*args, **kwargs)
 
         return request
