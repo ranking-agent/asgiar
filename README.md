@@ -1,3 +1,5 @@
+# ARCHIVED: This repo was developed for tests in the Strider repo, but is no longer being used.
+
 # ASGIAR
 
 **A**synchronous **S**erver **G**ateway **I**nterface - **A**ugmented **R**eality
